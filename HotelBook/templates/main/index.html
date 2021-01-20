@@ -1,12 +1,20 @@
+{% load flatpages %}
+{% get_flatpages as flatpages %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>HotelBook</title>
 
 </head>
 
 <body>
-<h1>Hello there</h1>
+<h3>Hello there</h3>
+<ul>
+    {% for page in flatpages %}
+        <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+    {% endfor %}
+</ul>
 </body>
 </html>

@@ -1,20 +1,12 @@
-{% load flatpages %}
-{% get_flatpages as flatpages %}
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>HotelBook</title>
+{% block title %}Hotelbook{% endblock %}
 
-</head>
+{% block content %}
+    <ul>
+        {% for page in flatpages %}
+            <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
 
-<body>
-<h3>Hello there</h3>
-<ul>
-    {% for page in flatpages %}
-        <li><a href="{{ page.url }}">{{ page.title }}</a></li>
-    {% endfor %}
-</ul>
-</body>
-</html>

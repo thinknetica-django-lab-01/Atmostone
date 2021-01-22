@@ -28,6 +28,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'ckeditor',
-    'main',
+
+    'apps.accounts.apps.AccountsConfig',
+    'apps.main.apps.MainConfig',
 
 ]
 
@@ -124,3 +127,7 @@ STATICFILES_DIRS = [
 ]
 
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+
+AUTH_USER_MODEL = 'accounts.User'
+
+SITE_ID = 1

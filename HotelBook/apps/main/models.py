@@ -1,7 +1,8 @@
-from apps.accounts.models import User
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+
+from apps.accounts.models import User
 
 
 class Country(models.Model):
@@ -67,7 +68,7 @@ class Room(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=10)
 
     def __str__(self):
-        return self.room_type
+        return self.room_type + ' room. ' + self.hotel.title + ' hotel'
 
 
 class Order(models.Model):
@@ -81,4 +82,5 @@ class Order(models.Model):
         return (self.departure_date - self.arrival_date).days * self.room.price
 
     def __str__(self):
-        return self.person.last_name + ' ' + self.person.first_name + '. ' + self.room.hotel.title + ' hotel. ' + self.room.room_type + ' room. ' + str(self.amount) + ' RUB.'
+        return self.person.last_name + ' ' + self.person.first_name + '. ' + self.room.hotel.title + ' hotel. ' + self.room.room_type + ' room. ' + str(
+            self.amount) + ' RUB.'

@@ -61,7 +61,7 @@ class Hotel(models.Model):
 
 class Room(models.Model):
     room_type = models.CharField(max_length=150, blank=False)
-    room_square = models.DecimalField(decimal_places=2, max_digits=10, blank=False)
+    room_square = models.DecimalField(decimal_places=1, max_digits=10, blank=False)
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, blank=False)
     room_features = models.ManyToManyField(RoomFeature)
     persons = models.IntegerField(blank=False)

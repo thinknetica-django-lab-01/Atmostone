@@ -5,11 +5,17 @@
 {% block content %}
 
     <main role="main" class="container">
-
+        <br>
+        {% if is_owner %}
+            <div class="alert alert-info" role="alert">
+                You have an <b>owner</b> account and can add your hotels!
+            </div>
+        {% endif %}
         <div class="starter-template">
-            <h1>Bootstrap starter template</h1>
-            <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text
-                and a mostly barebones HTML document.</p>
+            <h3>Your username: <span class="badge bg-secondary">{{ user.username }}</span></h3>
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Amet atque commodi consectetur consequuntur corporis delectus, deserunt dicta ducimus,
+                eveniet ipsam, iusto nam officiis possimus qui quos rem repellendus repudiandae voluptatum.</p>
         </div>
 
     </main>

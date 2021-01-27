@@ -14,7 +14,7 @@ class Country(models.Model):
 
 class City(models.Model):
     title = models.CharField(max_length=150, blank=False)
-    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, blank=False)
 
     def __str__(self):
         return self.title
@@ -37,12 +37,12 @@ class RoomFeature(models.Model):
 class Hotel(models.Model):
     title = models.CharField(max_length=150, blank=False)
 
-    city = models.ForeignKey(City, on_delete=models.CASCADE)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, blank=False)
     address = models.CharField(max_length=150, blank=False)
 
     rating = models.DecimalField(max_digits=4, decimal_places=2,
                                  validators=[MinValueValidator(0),
-                                             MaxValueValidator(10)])
+                                             MaxValueValidator(10)], blank=False)
 
     STARS_SET = (
         ('N', 'No stars'),
@@ -52,7 +52,7 @@ class Hotel(models.Model):
         ('4', '4 stars'),
         ('5', '5 stars'),
     )
-    stars = models.CharField(max_length=1, choices=STARS_SET)
+    stars = models.CharField(max_length=1, choices=STARS_SET, blank=False)
     features = models.ManyToManyField(HotelFeature)
 
     def __str__(self):
@@ -61,21 +61,22 @@ class Hotel(models.Model):
 
 class Room(models.Model):
     room_type = models.CharField(max_length=150, blank=False)
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+    room_square = models.DecimalField(decimal_places=1, max_digits=10, blank=False)
+    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, blank=False)
     room_features = models.ManyToManyField(RoomFeature)
-    persons = models.IntegerField()
+    persons = models.IntegerField(blank=False)
 
-    price = models.DecimalField(decimal_places=2, max_digits=10)
+    price = models.DecimalField(decimal_places=2, max_digits=10, blank=False)
 
     def __str__(self):
         return self.room_type + ' room. ' + self.hotel.title + ' hotel'
 
 
 class Order(models.Model):
-    person = models.ForeignKey(User, on_delete=models.CASCADE)
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    arrival_date = models.DateField()
-    departure_date = models.DateField()
+    person = models.ForeignKey(User, on_delete=models.CASCADE, blank=False)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, blank=False)
+    arrival_date = models.DateField(blank=False)
+    departure_date = models.DateField(blank=False)
 
     @property
     def amount(self):

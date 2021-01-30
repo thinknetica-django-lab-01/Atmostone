@@ -20,6 +20,7 @@ def index(request):
 
 class HotelList(ListView):
     model = Hotel
+    paginate_by = 1
 
 
 class HotelDetail(DetailView):

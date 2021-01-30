@@ -35,5 +35,13 @@
     </span>
     </div>
 
+    <br><br>
+    <div>
+        {% for feature in hotel_features %}
 
+            <a href="?features={{ feature.title }}">{{ feature.title }}</a>
+
+        {% endfor %}
+    </div>
+    <br>
 {% endblock %}

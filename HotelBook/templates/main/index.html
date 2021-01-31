@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load main_extras %}
 
 {% block title %}Hotelbook{% endblock %}
 
@@ -13,6 +14,8 @@
         {% endif %}
         <div class="starter-template">
             <h3>Your username: <span class="badge bg-secondary">{{ user.username }}</span></h3>
+            <p>Current server time: {% current_time %}</p>
+            <p>{{ 'Hello, world!'|reverse }}</p>
             <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                 Amet atque commodi consectetur consequuntur corporis delectus, deserunt dicta ducimus,
                 eveniet ipsam, iusto nam officiis possimus qui quos rem repellendus repudiandae voluptatum.</p>
@@ -21,4 +24,5 @@
     </main>
 
 {% endblock %}
+
 

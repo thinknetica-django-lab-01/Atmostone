@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>{{ hotel.title }} hotel</h2>
+    <ul>
+        <li>Address: {{ hotel.address }}</li>
+        <li>{{ hotel.stars }} stars</li>
+        <li>City: {{ hotel.city }}</li>
+        <li>Features:
+            {% for feature in hotel.features.all %}
+                {{ feature.title }}
+            {% endfor %}
+        </li>
+        <li>Rating: {{ hotel.rating }}</li>
+    </ul>
+{% endblock %}

@@ -27,10 +27,13 @@ class HotelList(ListView):
         context['hotel_features'] = HotelFeature.objects.all()
         return context
 
-    # def get_queryset(self):
-    #   print(self.kwargs)
-    #  self.features = get_object_or_404(HotelFeature, title=self.kwargs['features'])
-    # return Hotel.objects.filter(features=self.features)
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        features = self.request.GET.get("features")
+        if features:
+            queryset = Hotel.objects.filter(features__title=features)
+
+        return queryset
 
 
 class HotelDetail(DetailView):

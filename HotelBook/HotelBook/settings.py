@@ -128,6 +128,4 @@ STATICFILES_DIRS = [
 
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 
-AUTH_USER_MODEL = 'accounts.User'
-
 SITE_ID = 1

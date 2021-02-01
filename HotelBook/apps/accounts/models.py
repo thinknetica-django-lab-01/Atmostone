@@ -1,12 +1,11 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
-class User(AbstractUser):
-    first_name = models.CharField(max_length=150, blank=False)
-    last_name = models.CharField(max_length=150, blank=False)
-
-    email = models.EmailField(blank=False)
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     STATUS_SET = (
         ('U', 'User'),
@@ -25,4 +24,15 @@ class User(AbstractUser):
     home_address = models.CharField(max_length=150)
 
     def __str__(self):
-        return self.last_name + ' ' + self.first_name
+        return self.user.username
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()

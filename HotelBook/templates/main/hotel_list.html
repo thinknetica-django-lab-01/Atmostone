@@ -1,14 +1,58 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Hotels</h2>
-    <ul>
-        {% for hotel in object_list %}
-            <li>{{ hotel.title }}</li>
-            <p>{{ hotel.stars }} stars</p>
-            <p>{{ hotel.address }}</p>
-            <p><a href="{% url 'main:hotel_detail' hotel.pk %}">Details</a></p>
-            <br>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <br>
+        <div class="row">
+            <div class="col">
+                <h2>Hotels</h2>
+                <ul>
+                    {% for hotel in object_list %}
+                        <li>{{ hotel.title }}</li>
+                        <p>{{ hotel.stars }} stars</p>
+                        <p>{{ hotel.address }}</p>
+                        <p><a href="{% url 'main:hotel_detail' hotel.pk %}">Details</a></p>
+                        <br>
+                    {% endfor %}
+                </ul>
+
+                <ul class="pagination">
+
+
+                    {% if page_obj.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page=1">first</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+                        </li>
+                    {% endif %}
+
+                    {% for page in paginator.page_range %}
+                        {% if page == page_obj.number %}
+                            <b class="page-link">{{ page }} </b>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                        {% endif %}
+
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                        <li class="page-item"><a class="page-link"
+                                                 href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                        <li class="page-item"><a class="page-link"
+                                                 href="?page={{ page_obj.paginator.num_pages }}">last</a></li>
+                    {% endif %}
+
+
+                </ul>
+
+
+            </div>
+            <div class="col">
+                {% for feature in hotel_features %}
+                    <p>
+                        <a href="?features={{ feature.title }}" class="btn btn-primary">{{ feature.title }}</a>
+                    </p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

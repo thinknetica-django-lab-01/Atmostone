@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 
-from apps.main.models import Hotel
+from apps.main.models import Hotel, HotelFeature
 
 
 def index(request):
@@ -20,6 +20,20 @@ def index(request):
 
 class HotelList(ListView):
     model = Hotel
+    paginate_by = 1
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['hotel_features'] = HotelFeature.objects.all()
+        return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        features = self.request.GET.get("features")
+        if features:
+            queryset = Hotel.objects.filter(features__title=features)
+
+        return queryset
 
 
 class HotelDetail(DetailView):

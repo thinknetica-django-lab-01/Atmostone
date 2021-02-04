@@ -6,7 +6,7 @@ from apps.main.models import Hotel, HotelFeature
 
 def index(request):
     user = request.user
-    if user.status == 'O':
+    if user.profile.status == 'O':
         is_owner = True
     else:
         is_owner = False

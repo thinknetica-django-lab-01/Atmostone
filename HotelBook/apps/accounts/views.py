@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpRequest, HttpResponse
 from django.views.generic import UpdateView
 from django.contrib.auth.models import User
 
@@ -9,6 +10,7 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
     model = User
     form_class = ProfileForm
     template_name = 'accounts/profile_update.html'
+    login_url = 'login/'
     success_url = '/'
 
     def get_object(self):
@@ -19,3 +21,8 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
         form.instance.user = self.request.user
         form.save()
         return super().form_valid(form)
+
+
+def login(request):
+    html = 'Coming soon'
+    return HttpResponse(html)

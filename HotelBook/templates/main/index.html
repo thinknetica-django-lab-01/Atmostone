@@ -7,7 +7,7 @@
 
     <main role="main" class="container">
         <br>
-        {% if is_owner %}
+        {% if user.profile.status == 'O' %}
             <div class="alert alert-info" role="alert">
                 You have an <b>owner</b> account and can add your hotels!
             </div>

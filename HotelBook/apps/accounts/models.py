@@ -11,7 +11,7 @@ class Profile(models.Model):
         ('U', 'User'),
         ('O', 'Owner'),
     )
-    status = models.CharField(max_length=1, choices=STATUS_SET)
+    status = models.CharField(max_length=1, choices=STATUS_SET, default='U')
 
     SEX_SET = (
         ('M', 'Male'),

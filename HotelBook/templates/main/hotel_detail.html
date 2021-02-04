@@ -1,14 +1,29 @@
 {% extends "base.html" %}
 
+{% block title %}
+    {{ hotel.title }}
+{% endblock %}
+
 {% block content %}
-    <h2>{{ hotel.title }} hotel</h2>
-    <ul>
-        <li>Address: {{ hotel.address }}</li>
-        <li>{{ hotel.stars }} stars</li>
-        <li>City: {{ hotel.city }}</li>
-        <li>Features:
-            {{ hotel.features.all|join:", " }}
-        </li>
-        <li>Rating: {{ hotel.rating }}</li>
-    </ul>
+    <div class="container">
+        <br>
+        <div class="row">
+            <h2>{{ hotel.title }} hotel</h2>
+            <ul>
+                <li>Address: {{ hotel.address }}</li>
+                <li>{{ hotel.stars }} stars</li>
+                <li>City: {{ hotel.city }}</li>
+                <li>Features:
+                    {{ hotel.features.all|join:", " }}
+                </li>
+                <li>Rating: {{ hotel.rating }}</li>
+            </ul>
+            {% if request.user.profile.status == 'O' %}
+                <p>
+                    <a class="btn btn-primary" href="{% url 'main:hotel_update' pk=hotel.pk %}" role="button">Edit
+                        hotel</a>
+                </p>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

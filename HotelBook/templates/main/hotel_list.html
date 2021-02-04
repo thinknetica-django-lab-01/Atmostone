@@ -1,11 +1,21 @@
 {% extends "base.html" %}
 
+{% block title %}
+    Hotels
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <br>
         <div class="row">
             <div class="col">
                 <h2>Hotels</h2>
+                {% if request.user.profile.status == 'O' %}
+                    <p>
+                        <a class="btn btn-primary" href="{% url 'main:hotel_create' %}" role="button">Create
+                            hotel</a>
+                    </p>
+                {% endif %}
                 <ul>
                     {% for hotel in object_list %}
                         <li>{{ hotel.title }}</li>
@@ -49,7 +59,7 @@
             <div class="col">
                 {% for feature in hotel_features %}
                     <p>
-                        <a href="?features={{ feature.title }}" class="btn btn-primary">{{ feature.title }}</a>
+                        <a href="?features={{ feature.title }}" class="btn btn-secondary">{{ feature.title }}</a>
                     </p>
                 {% endfor %}
             </div>

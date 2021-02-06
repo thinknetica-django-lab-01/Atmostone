@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Add hotel
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <br>
+        <div class="row">
+            {% if request.user.profile.status == 'O' %}
+                <form method="post">{% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Save">
+                </form>
+            {% else %}
+                <p>You don't have permissions to create hotels</p>
+            {% endif %}
+        </div>
+    </div>
+
+
+{% endblock %}

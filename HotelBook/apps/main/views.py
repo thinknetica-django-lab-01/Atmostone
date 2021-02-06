@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from apps.main.models import Hotel, HotelFeature
 
@@ -38,3 +38,15 @@ class HotelList(ListView):
 
 class HotelDetail(DetailView):
     model = Hotel
+
+
+class HotelCreate(CreateView):
+    model = Hotel
+    fields = '__all__'
+    success_url = '/hotels/'
+
+
+class HotelUpdate(UpdateView):
+    model = Hotel
+    fields = '__all__'
+    success_url = '/hotels/'

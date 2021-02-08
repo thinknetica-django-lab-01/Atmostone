@@ -38,9 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.flatpages',
-    'ckeditor',
 
-    'apps.accounts.apps.AccountsConfig',
+    'ckeditor',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
+    'apps.profile.apps.AccountsConfig',
     'apps.main.apps.MainConfig',
 
 ]
@@ -104,6 +109,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -128,4 +138,16 @@ STATICFILES_DIRS = [
 
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 
+LOGIN_REDIRECT_URL = '/'
+
 SITE_ID = 1
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': '468654205562-3nkth42hsrh9qssmp49ambfq39j4ee78.apps.googleusercontent.com',
+            'secret': 'Gi21Ps4lBolVmEEK4NZzJNnw',
+            'key': ''
+        }
+    }
+}

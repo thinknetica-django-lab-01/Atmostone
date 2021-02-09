@@ -1,15 +1,16 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, TemplateView
 
 from apps.main.models import Hotel, HotelFeature
 
 
-def index(request):
-    user = request.user
-    context = {
-        'user': user,
-    }
-    return render(request, 'main/index.html', context)
+class MainpageView(TemplateView):
+    template_name = "main/index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user
+        return context
 
 
 class HotelList(ListView):
@@ -30,16 +31,19 @@ class HotelList(ListView):
         return queryset
 
 
+# View for hotel details
 class HotelDetail(DetailView):
     model = Hotel
 
 
+# View for creating hotels
 class HotelCreate(CreateView):
     model = Hotel
     fields = '__all__'
     success_url = '/hotels/'
 
 
+# View for updating hotels
 class HotelUpdate(UpdateView):
     model = Hotel
     fields = '__all__'

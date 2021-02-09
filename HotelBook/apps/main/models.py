@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
-from apps.accounts.models import User
+from apps.profile.models import User
 
 
 class Country(models.Model):

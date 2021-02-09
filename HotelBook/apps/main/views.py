@@ -7,11 +7,6 @@ from apps.main.models import Hotel, HotelFeature
 class MainpageView(TemplateView):
     template_name = "main/index.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['user'] = self.request.user
-        return context
-
 
 class HotelList(ListView):
     model = Hotel
@@ -31,20 +26,20 @@ class HotelList(ListView):
         return queryset
 
 
-# View for hotel details
 class HotelDetail(DetailView):
+    """View for hotel details"""
     model = Hotel
 
 
-# View for creating hotels
 class HotelCreate(CreateView):
+    """View for creating hotels"""
     model = Hotel
     fields = '__all__'
     success_url = '/hotels/'
 
 
-# View for updating hotels
 class HotelUpdate(UpdateView):
+    """View for updating hotels"""
     model = Hotel
     fields = '__all__'
     success_url = '/hotels/'

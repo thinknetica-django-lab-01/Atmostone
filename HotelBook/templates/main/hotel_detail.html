@@ -18,7 +18,7 @@
                 </li>
                 <li>Rating: {{ hotel.rating }}</li>
             </ul>
-            {% if request.user.profile.status == 'O' %}
+            {% if perms.main.add_hotel %}
                 <p>
                     <a class="btn btn-primary" href="{% url 'main:hotel_update' pk=hotel.pk %}" role="button">Edit
                         hotel</a>

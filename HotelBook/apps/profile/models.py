@@ -7,12 +7,6 @@ from django.dispatch import receiver
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    STATUS_SET = (
-        ('U', 'User'),
-        ('O', 'Owner'),
-    )
-    status = models.CharField(max_length=1, choices=STATUS_SET, default='U')
-
     SEX_SET = (
         ('M', 'Male'),
         ('F', 'Female'),

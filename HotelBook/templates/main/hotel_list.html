@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col">
                 <h2>Hotels</h2>
-                {% if request.user.profile.status == 'O' %}
+                {% if perms.main.add_hotel %}
                     <p>
                         <a class="btn btn-primary" href="{% url 'main:hotel_create' %}" role="button">Create
                             hotel</a>

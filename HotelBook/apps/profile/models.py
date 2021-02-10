@@ -6,6 +6,8 @@ from django.core import mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
+from HotelBook import settings
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -32,7 +34,7 @@ def create_user_profile(sender, instance, created, **kwargs):
         subject = 'Welcome!'
         html_message = render_to_string('emails/greeting.html', {'username': instance.username})
         plain_message = strip_tags(html_message)
-        from_email = 'a.l.e.x.e.y.b@yandex.ru'
+        from_email = settings.DEFAULT_FROM_EMAIL
         to = instance.email
 
         mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)

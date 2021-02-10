@@ -35,7 +35,7 @@ def create_user_profile(sender, instance, created, **kwargs):
         from_email = 'a.l.e.x.e.y.b@yandex.ru'
         to = instance.email
 
-        mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+        # mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
 
 
 @receiver(post_save, sender=User)

@@ -28,7 +28,7 @@ class Profile(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
-        instance.groups.add(Group.objects.get(name='common users')),
+        instance.groups.add(Group.objects.get(name='common users'))
         subject = 'Welcome!'
         html_message = render_to_string('emails/greeting.html', {'username': instance.username})
         plain_message = strip_tags(html_message)

@@ -40,6 +40,7 @@ def create_user_profile(sender, instance, created, **kwargs):
         mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
 
 
+
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()

@@ -2,6 +2,11 @@ from django.contrib.auth.models import User, Group
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.core import mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+
+from HotelBook import settings
 
 
 class Profile(models.Model):
@@ -26,6 +31,13 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
         instance.groups.add(Group.objects.get(name='common users'))
+        subject = 'Welcome!'
+        html_message = render_to_string('emails/greeting.html', {'username': instance.username})
+        plain_message = strip_tags(html_message)
+        from_email = settings.DEFAULT_FROM_EMAIL
+        to = instance.email
+
+        mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
 
 
 

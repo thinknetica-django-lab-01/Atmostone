@@ -14,7 +14,7 @@
         {% endif %}
         <div class="starter-template">
             {% if request.user.is_authenticated %}
-                <h3>Your username: <span class="badge bg-secondary">{{ user.username }}</span></h3>
+                <h3>Your username: <span class="badge bg-secondary">{{ request.user.username }}</span></h3>
             {% endif %}
             <p>Current server time: {% current_time %}</p>
             <p>{{ 'Hello, world!'|reverse }}</p>

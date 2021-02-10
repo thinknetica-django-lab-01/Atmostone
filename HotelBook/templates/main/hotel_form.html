@@ -8,14 +8,15 @@
     <div class="container">
         <br>
         <div class="row">
-            {% if request.user.profile.status == 'O' %}
+            {% if perms.main.add_hotel %}
                 <form method="post">{% csrf_token %}
                     {{ form.as_p }}
                     <input type="submit" value="Save">
                 </form>
             {% else %}
-                <p>You don't have permissions to create hotels</p>
+                <p>You don't have permissions to create or edit hotels</p>
             {% endif %}
+
         </div>
     </div>
 

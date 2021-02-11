@@ -1,17 +1,16 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
+
+from apps.profile.models import Profile
 
 
-class ProfileForm(forms.ModelForm):
-    age = forms.IntegerField(min_value=0)
-
+class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('email', 'first_name', 'last_name')
 
-    def clean_age(self):
-        age = self.cleaned_data['age']
-        if age < 18:
-            raise ValidationError("You must be 18 or older!")
-        return age
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('phone', 'sex', 'date_of_birth', 'home_address')

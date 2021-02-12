@@ -19,6 +19,10 @@ class FlatPageAdmin(admin.ModelAdmin):
     form = FlatPageAdminForm
 
 
+class HotelAdmin(admin.ModelAdmin):
+    readonly_fields = ('created_at',)
+
+
 admin.site.unregister(FlatPage)
 admin.site.register(FlatPage, FlatPageAdmin)
 
@@ -26,7 +30,7 @@ admin.site.register(Country)
 admin.site.register(City)
 admin.site.register(HotelFeature)
 admin.site.register(RoomFeature)
-admin.site.register(Hotel)
 admin.site.register(Room)
 admin.site.register(Order)
 
+admin.site.register(Hotel, HotelAdmin)

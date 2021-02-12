@@ -1,6 +1,6 @@
 import datetime
 
-from apps.accounts.models import User
+from apps.profile.models import User
 from apps.main.models import Hotel, City, HotelFeature, Order, Room
 
 # Creating new hotel

@@ -1,8 +1,14 @@
 from django.contrib.auth.models import AbstractUser
+from django.core import mail
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
-from apps.profile.models import User
+from HotelBook import settings
+from apps.profile.models import User, Profile
 
 
 class Country(models.Model):
@@ -85,3 +91,14 @@ class Order(models.Model):
     def __str__(self):
         return self.person.last_name + ' ' + self.person.first_name + '. ' + self.room.hotel.title + ' hotel. ' + self.room.room_type + ' room. ' + str(
             self.amount) + ' RUB.'
+
+
+@receiver(post_save, sender=Hotel)
+def new_hotel_mailing(sender, instance, created, **kwargs):
+    if created:
+        subscribers = [profile.user.email for profile in Profile.objects.filter(subscription='H')]
+        subject = 'We got a new hotel for you!'
+        html_message = render_to_string('emails/new_hotel.html', {'title': instance.title})
+        plain_message = strip_tags(html_message)
+        from_email = settings.DEFAULT_FROM_EMAIL
+        mail.send_mail(subject, plain_message, from_email, subscribers, html_message=html_message)

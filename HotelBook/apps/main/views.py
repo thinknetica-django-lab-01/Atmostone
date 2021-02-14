@@ -9,6 +9,7 @@ class MainpageView(TemplateView):
 
 
 class HotelList(ListView):
+    """View for hotel list"""
     model = Hotel
     paginate_by = 1
 

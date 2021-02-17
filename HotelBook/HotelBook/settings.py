@@ -157,13 +157,11 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-ACCOUNT_EMAIL_REQUIRED = True
+#ACCOUNT_EMAIL_REQUIRED = True
 
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+#ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
-ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 

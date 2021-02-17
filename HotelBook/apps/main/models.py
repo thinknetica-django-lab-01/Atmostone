@@ -1,5 +1,4 @@
 from django.contrib.auth.models import AbstractUser
-from django.core import mail
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models.signals import post_save
@@ -8,6 +7,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 from HotelBook import settings
+from apps.main.tasks import send_emails_for_subscibers
 from apps.profile.models import User, Profile
 
 
@@ -103,4 +103,4 @@ def new_hotel_mailing(sender, instance, created, **kwargs):
         html_message = render_to_string('emails/new_hotel.html', {'title': instance.title})
         plain_message = strip_tags(html_message)
         from_email = settings.DEFAULT_FROM_EMAIL
-        mail.send_mail(subject, plain_message, from_email, subscribers, html_message=html_message)
+        send_emails_for_subscibers.delay(subject, plain_message, from_email, subscribers, html_message)

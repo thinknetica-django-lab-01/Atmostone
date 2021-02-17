@@ -1,3 +1,4 @@
+{% load cache %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'main:index' %}">HotelBook</a>
@@ -12,14 +13,15 @@
                        aria-current="page"
                        href="{% url 'main:hotel_list' %}">Hotels</a>
                 </li>
-                {% for page in flatpages %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if page.title|lower in request.path %} active {% endif %}"
-                           aria-current="page"
-                           href="{{ page.url }}">{{ page.title }}</a>
-                    </li>
-
-                {% endfor %}
+                {% cache 60 pages %}
+                    {% for page in flatpages %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if page.title|lower in request.path %} active {% endif %}"
+                               aria-current="page"
+                               href="{{ page.url }}">{{ page.title }} </a>
+                        </li>
+                    {% endfor %}
+                {% endcache %}
             </ul>
 
 

@@ -133,7 +133,7 @@ CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 
 LOGIN_REDIRECT_URL = '/'
 
-SITE_ID = 1
+SITE_ID = 4
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {

@@ -11,7 +11,7 @@ class MainpageView(TemplateView):
 class HotelList(ListView):
     """View for hotel list"""
     model = Hotel
-    paginate_by = 1
+    paginate_by = 3
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

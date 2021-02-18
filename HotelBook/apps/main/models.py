@@ -63,6 +63,8 @@ class Hotel(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
+    views = models.IntegerField()
+
     def __str__(self):
         return self.title
 

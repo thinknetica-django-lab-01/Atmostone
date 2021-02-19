@@ -1,3 +1,4 @@
+from django.core.cache import cache
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, TemplateView
 
@@ -30,6 +31,13 @@ class HotelList(ListView):
 class HotelDetail(DetailView):
     """View for hotel details"""
     model = Hotel
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        self.object.views += 1
+        self.object.save()
+        context['views'] = cache.get_or_set(f'{self.object.pk}' + '_views', self.object.views, 5)
+        return context
 
 
 class HotelCreate(CreateView):

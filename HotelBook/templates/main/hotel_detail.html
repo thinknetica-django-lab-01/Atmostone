@@ -17,6 +17,7 @@
                     {{ hotel.features.all|join:", " }}
                 </li>
                 <li>Rating: {{ hotel.rating }}</li>
+                <li>Views: {{ views }}</li>
             </ul>
             {% if perms.main.add_hotel %}
                 <p>

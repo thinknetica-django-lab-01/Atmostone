@@ -1,4 +1,3 @@
-from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models.signals import post_save
@@ -48,7 +47,8 @@ class Hotel(models.Model):
 
     rating = models.DecimalField(max_digits=4, decimal_places=2,
                                  validators=[MinValueValidator(0),
-                                             MaxValueValidator(10)], blank=False)
+                                             MaxValueValidator(10)],
+                                 blank=False)
 
     STARS_SET = (
         ('N', 'No stars'),
@@ -74,7 +74,8 @@ class Hotel(models.Model):
 
 class Room(models.Model):
     room_type = models.CharField(max_length=150, blank=False)
-    room_square = models.DecimalField(decimal_places=1, max_digits=10, blank=False)
+    room_square = models.DecimalField(decimal_places=1,
+                                      max_digits=10, blank=False)
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, blank=False)
     room_features = models.ManyToManyField(RoomFeature)
     persons = models.IntegerField(blank=False)
@@ -96,16 +97,21 @@ class Order(models.Model):
         return (self.departure_date - self.arrival_date).days * self.room.price
 
     def __str__(self):
-        return self.person.last_name + ' ' + self.person.first_name + '. ' + self.room.hotel.title + ' hotel. ' + self.room.room_type + ' room. ' + str(
+        return self.person.last_name + ' ' + self.person.first_name + \
+               '. ' + self.room.hotel.title + ' hotel. ' + \
+               self.room.room_type + ' room. ' + str(
             self.amount) + ' RUB.'
 
 
 @receiver(post_save, sender=Hotel)
 def new_hotel_mailing(sender, instance, created, **kwargs):
     if created:
-        subscribers = [profile.user.email for profile in Profile.objects.filter(subscription='H')]
+        subscribers = [profile.user.email for profile
+                       in Profile.objects.filter(subscription='H')]
         subject = 'We got a new hotel for you!'
-        html_message = render_to_string('emails/new_hotel.html', {'title': instance.title})
+        html_message = render_to_string('emails/new_hotel.html',
+                                        {'title': instance.title})
         plain_message = strip_tags(html_message)
         from_email = settings.DEFAULT_FROM_EMAIL
-        send_emails_for_subscibers.delay(subject, plain_message, from_email, subscribers, html_message)
+        send_emails_for_subscibers.delay(subject, plain_message,
+                                         from_email, subscribers, html_message)

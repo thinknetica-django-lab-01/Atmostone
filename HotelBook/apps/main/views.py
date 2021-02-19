@@ -1,6 +1,6 @@
 from django.core.cache import cache
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, TemplateView
+from django.views.generic import ListView, DetailView,\
+    CreateView, UpdateView, TemplateView
 
 from apps.main.models import Hotel, HotelFeature
 
@@ -36,7 +36,8 @@ class HotelDetail(DetailView):
         context = super().get_context_data()
         self.object.views += 1
         self.object.save()
-        context['views'] = cache.get_or_set(f'{self.object.pk}' + '_views', self.object.views, 5)
+        context['views'] = cache.get_or_set(f'{self.object.pk}'
+                                            + '_views', self.object.views, 5)
         return context
 
 

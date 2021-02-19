@@ -16,5 +16,3 @@ app.conf.beat_schedule = {
         'schedule': crontab(hour=20, minute=30, day_of_week=6),
     },
 }
-
-

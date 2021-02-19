@@ -29,12 +29,14 @@ class HotelListViewTest(TestCase):
         num = 10
         letters = string.ascii_letters
         for i in range(num):
-            Country.objects.create(title=''.join(random.choice(letters) for i in range(num)))
+            Country.objects.create(title=''.join(random.choice(letters)
+                                                 for i in range(num)))
 
         countries = Country.objects.all()
 
         for i in range(num):
-            City.objects.create(title=''.join(random.choice(letters) for i in range(num)),
+            City.objects.create(title=''.join(random.choice(letters)
+                                              for i in range(num)),
                                 country=random.choice(countries))
 
         cities = City.objects.all()
@@ -42,7 +44,8 @@ class HotelListViewTest(TestCase):
         stars_set = ['N', '1', '2', '3', '4', '5']
 
         for i in range(num):
-            HotelFeature.objects.create(title=''.join(random.choice(letters) for i in range(num)))
+            HotelFeature.objects.create(title=''.join(random.choice(letters)
+                                                      for i in range(num)))
 
         features = HotelFeature.objects.all()
 
@@ -50,10 +53,14 @@ class HotelListViewTest(TestCase):
             title = ''.join(random.choice(letters) for i in range(num))
             Hotel.objects.create(title=title,
                                  city=random.choice(cities),
-                                 address=''.join(random.choice(letters) for i in range(random.randint(10, 100))),
+                                 address=''.join(random.choice(letters)
+                                                 for i in range(
+                                     random.randint(10, 100))),
                                  rating=round(random.uniform(0, 10), 2),
                                  stars=random.choice(stars_set))
-            Hotel.objects.get(title=title).features.set(random.sample(list(features), random.randint(0, 5)))
+            Hotel.objects.get(title=title).features.set(
+                random.sample(list(features),
+                              random.randint(0, 5)))
 
     def test_view_exists(self):
         resp = self.client.get('/hotels/')
@@ -81,7 +88,8 @@ class HotelDetailViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         Country.objects.create(title='Russia')
-        City.objects.create(title='Moscow', country=Country.objects.get(title='Russia'))
+        City.objects.create(title='Moscow',
+                            country=Country.objects.get(title='Russia'))
         HotelFeature.objects.create(title='parking')
         HotelFeature.objects.create(title='gym')
         Hotel.objects.create(title='Raddison',
@@ -89,8 +97,9 @@ class HotelDetailViewTest(TestCase):
                              address='Some address',
                              rating=8.37,
                              stars='5')
-        Hotel.objects.get(title='Raddison').features.set([HotelFeature.objects.get(title='parking'),
-                                                          HotelFeature.objects.get(title='gym')])
+        Hotel.objects.get(title='Raddison').features.set(
+            [HotelFeature.objects.get(title='parking'),
+             HotelFeature.objects.get(title='gym')])
 
     def test_view_exists(self):
         pk = Hotel.objects.get(title='Raddison').pk
@@ -99,11 +108,13 @@ class HotelDetailViewTest(TestCase):
 
     def test_view_by_name(self):
         pk = Hotel.objects.get(title='Raddison').pk
-        resp = self.client.get(reverse('main:hotel_detail', kwargs={'pk': pk}))
+        resp = self.client.get(reverse('main:hotel_detail',
+                                       kwargs={'pk': pk}))
         self.assertEqual(resp.status_code, 200)
 
     def test_correct_template(self):
         pk = Hotel.objects.get(title='Raddison').pk
-        resp = self.client.get(reverse('main:hotel_detail', kwargs={'pk': pk}))
+        resp = self.client.get(reverse('main:hotel_detail',
+                                       kwargs={'pk': pk}))
         self.assertEqual(resp.status_code, 200)
         self.assertTemplateUsed(resp, 'main/hotel_detail.html')

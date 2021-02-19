@@ -68,6 +68,9 @@ class Hotel(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        ordering = ['-created_at']
+
 
 class Room(models.Model):
     room_type = models.CharField(max_length=150, blank=False)

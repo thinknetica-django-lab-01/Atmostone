@@ -59,11 +59,11 @@ class Hotel(models.Model):
         ('5', '5 stars'),
     )
     stars = models.CharField(max_length=1, choices=STARS_SET, blank=False)
-    features = models.ManyToManyField(HotelFeature)
+    features = models.ManyToManyField(HotelFeature, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
 
-    views = models.IntegerField()
+    views = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title

@@ -1,8 +1,6 @@
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView
-from django.http import HttpRequest, HttpResponse
-from django.views.generic import UpdateView, CreateView
+
+from django.views.generic import UpdateView
 from django.contrib.auth.models import User
 
 from apps.profile.forms import UserForm, ProfileForm

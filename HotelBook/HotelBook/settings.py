@@ -89,16 +89,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': '''django.contrib.auth.
+                password_validation.UserAttributeSimilarityValidator''',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': '''django.contrib.auth.
+                password_validation.MinimumLengthValidator''',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': '''django.contrib.auth.
+                password_validation.CommonPasswordValidator''',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': '''django.contrib.auth.
+                password_validation.NumericPasswordValidator''',
     },
 ]
 
@@ -145,11 +149,11 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-#ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_EMAIL_REQUIRED = True
 
-#ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
-#ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+# ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 

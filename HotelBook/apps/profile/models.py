@@ -10,6 +10,8 @@ from HotelBook import settings
 
 
 class Profile(models.Model):
+    """Model for profile of user
+    """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     SEX_SET = (

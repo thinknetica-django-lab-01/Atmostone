@@ -11,6 +11,8 @@ from apps.profile.models import User, Profile
 
 
 class Country(models.Model):
+    """Model for countries
+    """
     title = models.CharField(max_length=150, blank=False)
 
     def __str__(self):
@@ -18,6 +20,8 @@ class Country(models.Model):
 
 
 class City(models.Model):
+    """Model for cities
+    """
     title = models.CharField(max_length=150, blank=False)
     country = models.ForeignKey(Country, on_delete=models.CASCADE, blank=False)
 
@@ -26,6 +30,8 @@ class City(models.Model):
 
 
 class HotelFeature(models.Model):
+    """Model for features of hotels
+    """
     title = models.CharField(max_length=150, blank=False)
 
     def __str__(self):
@@ -33,6 +39,8 @@ class HotelFeature(models.Model):
 
 
 class RoomFeature(models.Model):
+    """Model for features of rooms
+    """
     title = models.CharField(max_length=150, blank=False)
 
     def __str__(self):
@@ -40,6 +48,8 @@ class RoomFeature(models.Model):
 
 
 class Hotel(models.Model):
+    """Model for hotels
+    """
     title = models.CharField(max_length=150, blank=False)
 
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=False)
@@ -73,6 +83,8 @@ class Hotel(models.Model):
 
 
 class Room(models.Model):
+    """Model for room in hotel
+    """
     room_type = models.CharField(max_length=150, blank=False)
     room_square = models.DecimalField(decimal_places=1,
                                       max_digits=10, blank=False)
@@ -87,6 +99,8 @@ class Room(models.Model):
 
 
 class Order(models.Model):
+    """Model for order of the room
+    """
     person = models.ForeignKey(User, on_delete=models.CASCADE, blank=False)
     room = models.ForeignKey(Room, on_delete=models.CASCADE, blank=False)
     arrival_date = models.DateField(blank=False)
@@ -94,6 +108,9 @@ class Order(models.Model):
 
     @property
     def amount(self):
+        """
+        :return: Amount of money for whole order
+        """
         return (self.departure_date - self.arrival_date).days * self.room.price
 
     def __str__(self):

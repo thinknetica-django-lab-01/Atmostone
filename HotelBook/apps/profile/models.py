@@ -31,7 +31,7 @@ class Profile(models.Model):
     subscription = models.CharField(max_length=1,
                                     choices=SUBS_SET, default='N')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.user.username
 
 

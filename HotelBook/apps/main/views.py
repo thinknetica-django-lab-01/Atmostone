@@ -14,7 +14,7 @@ class HotelList(ListView):
     model = Hotel
     paginate_by = 3
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)
         context['hotel_features'] = HotelFeature.objects.all()
         return context

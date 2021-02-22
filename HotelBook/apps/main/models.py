@@ -4,7 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-
+import decimal
 from HotelBook import settings
 from apps.main.tasks import send_emails_for_subscibers
 from apps.profile.models import User, Profile
@@ -15,7 +15,7 @@ class Country(models.Model):
     """
     title = models.CharField(max_length=150, blank=False)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.title
 
 
@@ -25,7 +25,7 @@ class City(models.Model):
     title = models.CharField(max_length=150, blank=False)
     country = models.ForeignKey(Country, on_delete=models.CASCADE, blank=False)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.title
 
 
@@ -34,7 +34,7 @@ class HotelFeature(models.Model):
     """
     title = models.CharField(max_length=150, blank=False)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.title
 
 
@@ -43,7 +43,7 @@ class RoomFeature(models.Model):
     """
     title = models.CharField(max_length=150, blank=False)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.title
 
 
@@ -75,7 +75,7 @@ class Hotel(models.Model):
 
     views = models.IntegerField(default=0)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.title
 
     class Meta:
@@ -94,7 +94,7 @@ class Room(models.Model):
 
     price = models.DecimalField(decimal_places=2, max_digits=10, blank=False)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.room_type + ' room. ' + self.hotel.title + ' hotel'
 
 
@@ -107,13 +107,13 @@ class Order(models.Model):
     departure_date = models.DateField(blank=False)
 
     @property
-    def amount(self):
+    def amount(self) -> decimal.Decimal:
         """
         :return: Amount of money for whole order
         """
         return (self.departure_date - self.arrival_date).days * self.room.price
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.person.last_name + ' ' + self.person.first_name + \
                '. ' + self.room.hotel.title + ' hotel. ' + \
                self.room.room_type + ' room. ' + str(

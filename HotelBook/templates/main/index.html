@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load main_extras %}
 
 {% block title %}Hotelbook{% endblock %}
@@ -22,7 +23,14 @@
                 Amet atque commodi consectetur consequuntur corporis delectus, deserunt dicta ducimus,
                 eveniet ipsam, iusto nam officiis possimus qui quos rem repellendus repudiandae voluptatum.</p>
         </div>
-
+        <div class="row">
+            <div class="col-6">
+                <textarea id="chat-log" cols="50" rows="10"></textarea><br/>
+                <input id="chat-message-input" type="text" size="50"/><br/>
+                <button id="chat-message-submit" class="btn btn-primary btn-block" type="button">Send</button>
+                <script src="{% static 'js/chat.js' %}"></script>
+            </div>
+        </div>
     </main>
 
 {% endblock %}

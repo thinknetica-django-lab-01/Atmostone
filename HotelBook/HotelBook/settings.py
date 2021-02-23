@@ -13,7 +13,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -37,9 +36,11 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'channels',
 
     'apps.profile.apps.AccountsConfig',
     'apps.main.apps.MainConfig',
+    'apps.chat'
 
 ]
 
@@ -169,7 +170,6 @@ CELERY_TASK_SERIALIZER = 'json'
 
 CELERY_TIMEZONE = "Europe/Moscow"
 
-
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
@@ -179,3 +179,5 @@ CACHES = {
         }
     }
 }
+
+ASGI_APPLICATION = "routing.application"

@@ -4,7 +4,7 @@ from django.contrib import admin
 
 from django.contrib.flatpages.models import FlatPage
 
-from apps.main.models import Country, City,\
+from apps.main.models import Country, City, \
     HotelFeature, RoomFeature, Hotel, Room, Order
 
 
@@ -21,7 +21,26 @@ class FlatPageAdmin(admin.ModelAdmin):
 
 
 class HotelAdmin(admin.ModelAdmin):
+    list_display = ('title', 'location', 'stars', 'rating', 'active')
     readonly_fields = ('created_at',)
+    list_filter = ('features', 'created_at', 'stars')
+    search_fields = ('title',)
+    actions = ('make_active', 'make_inactive')
+
+    def location(self, obj):
+        return f'{obj.city}. {obj.city.country}'
+
+    location.short_description = 'Location'
+
+    def make_active(self, request, queryset):
+        queryset.update(active=True)
+
+    make_active.short_description = 'Make selected hotels visible'
+
+    def make_inactive(self, request, queryset):
+        queryset.update(active=False)
+
+    make_inactive.short_description = 'Make selected hotels not visible'
 
 
 admin.site.unregister(FlatPage)

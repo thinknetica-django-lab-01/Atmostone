@@ -74,6 +74,7 @@ class Hotel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     views = models.IntegerField(default=0)
+    active = models.BooleanField(default=True)
 
     def __str__(self) -> str:
         return self.title

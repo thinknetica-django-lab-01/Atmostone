@@ -1,0 +1,11 @@
+django==3.1.7
+django-allauth==0.44.0
+channels==3.0.3
+channels-redis==3.2.0
+celery==5.0.5
+django-ckeditor==6.0.0
+django-redis==4.12.1
+python-dotenv==0.15.0
+Sphinx==3.5.1
+redis==3.5.3
+psycopg2-binary==2.8.6

@@ -4,7 +4,7 @@ from django.contrib import admin
 
 from django.contrib.flatpages.models import FlatPage
 
-from apps.main.models import Country, City, RoomFeature, Hotel, Room, Order
+from apps.main.models import Country, City, RoomFeature, Hotel, Room, Order, HotelCountry
 
 
 class FlatPageAdminForm(forms.ModelForm):
@@ -50,5 +50,6 @@ admin.site.register(City)
 admin.site.register(RoomFeature)
 admin.site.register(Room)
 admin.site.register(Order)
+admin.site.register(HotelCountry)
 
 admin.site.register(Hotel, HotelAdmin)

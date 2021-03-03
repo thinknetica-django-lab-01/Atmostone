@@ -21,14 +21,11 @@ class HotelList(ListView):
         for hotel in Hotel.objects.all():
             features.update(hotel.features)
         context['hotel_features'] = features
-        print(context['hotel_features'])
         return context
 
     def get_queryset(self):
         queryset = super().get_queryset()
         feature = self.request.GET.get("features")
-        print(feature)
-        # print(Hotel.objects.filter(features__contains=[feature]).query)
         if feature:
             queryset = Hotel.objects.filter(features__contains=[feature])
         return queryset
@@ -75,6 +72,4 @@ class HotelSearch(ListView):
             search_query = SearchQuery(query)
             result = Hotel.objects.annotate(rank=SearchRank(vector, search_query)).filter(rank__gte=0.001).order_by(
                 '-rank')
-        else:
-            result = None
         return result

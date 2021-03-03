@@ -8,6 +8,7 @@ import decimal
 from HotelBook import settings
 from apps.main.tasks import send_emails_for_subscibers
 from apps.profile.models import User, Profile
+from django.contrib.postgres.fields import ArrayField
 
 
 class Country(models.Model):
@@ -24,15 +25,6 @@ class City(models.Model):
     """
     title = models.CharField(max_length=150, blank=False)
     country = models.ForeignKey(Country, on_delete=models.CASCADE, blank=False)
-
-    def __str__(self) -> str:
-        return self.title
-
-
-class HotelFeature(models.Model):
-    """Model for features of hotels
-    """
-    title = models.CharField(max_length=150, blank=False)
 
     def __str__(self) -> str:
         return self.title
@@ -69,7 +61,8 @@ class Hotel(models.Model):
         ('5', '5 stars'),
     )
     stars = models.CharField(max_length=1, choices=STARS_SET, blank=False)
-    features = models.ManyToManyField(HotelFeature, blank=True)
+
+    features = ArrayField(models.CharField(max_length=150), blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
 

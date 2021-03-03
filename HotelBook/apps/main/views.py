@@ -1,8 +1,8 @@
 from django.core.cache import cache
-from django.views.generic import ListView, DetailView,\
+from django.views.generic import ListView, DetailView, \
     CreateView, UpdateView, TemplateView
 
-from apps.main.models import Hotel, HotelFeature
+from apps.main.models import Hotel
 
 
 class MainpageView(TemplateView):
@@ -16,15 +16,20 @@ class HotelList(ListView):
 
     def get_context_data(self, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)
-        context['hotel_features'] = HotelFeature.objects.all()
+        features = set()
+        for hotel in Hotel.objects.all():
+            features.update(hotel.features)
+        context['hotel_features'] = features
+        print(context['hotel_features'])
         return context
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        features = self.request.GET.get("features")
-        if features:
-            queryset = Hotel.objects.filter(features__title=features)
-
+        feature = self.request.GET.get("features")
+        print(feature)
+        #print(Hotel.objects.filter(features__contains=[feature]).query)
+        if feature:
+            queryset = Hotel.objects.filter(features__contains=[feature])
         return queryset
 
 

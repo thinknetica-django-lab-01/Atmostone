@@ -10,5 +10,7 @@ urlpatterns = [
     path('hotels/<int:pk>/edit', views.HotelUpdate.as_view(),
          name='hotel_update'),
     path('hotels/', views.HotelList.as_view(), name='hotel_list'),
+    path('hotels/search/', views.HotelSearch.as_view(), name='hotel_search'),
+
     path('', views.MainpageView.as_view(), name='index'),
 ]

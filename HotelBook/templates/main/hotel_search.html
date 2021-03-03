@@ -9,15 +9,12 @@
         <br>
         <div class="row">
             <div class="col">
-                <p><a class="btn btn-success" href="{% url 'main:hotel_search' %}" role="button">Search
-                    hotel</a></p>
+                <form method="GET" >
+                    <input type="search" name="search">
+                    <button class="btn btn-success" type="submit"> Search</button>
+                </form>
                 <h2>Hotels</h2>
-                {% if perms.main.add_hotel %}
-                    <p>
-                        <a class="btn btn-primary" href="{% url 'main:hotel_create' %}" role="button">Create
-                            hotel</a>
-                    </p>
-                {% endif %}
+
                 <ul>
                     {% for hotel in object_list %}
                         <li>{{ hotel.title }}</li>

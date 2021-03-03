@@ -44,6 +44,8 @@ class Hotel(models.Model):
     """
     title = models.CharField(max_length=150, blank=False)
 
+    description = models.CharField(max_length=2000, blank=True)
+
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=False)
     address = models.CharField(max_length=150, blank=False)
 

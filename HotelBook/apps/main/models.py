@@ -116,6 +116,33 @@ class Order(models.Model):
             self.amount) + ' RUB.'
 
 
+class HotelCountry(models.Model):
+    """
+    Model for PostgreSQL View, that shows hotels with their cities and countries
+    Joins: Hotel -> City -> Country
+    SQL code:
+
+    CREATE OR REPLACE VIEW hello_django_dev.public.hotelcountry
+    AS
+        SELECT main_hotel.id, main_hotel.title hotel_name, mc.title city_name, m.title country_name
+        FROM hello_django_dev.public.main_hotel
+            INNER JOIN hello_django_dev.public.main_city mc on mc.id = hello_django_dev.public.main_hotel.city_id
+            INNER JOIN main_country m on m.id = mc.country_id;
+
+    """
+    id = models.AutoField(primary_key=True)
+    hotel_name = models.CharField(max_length=150)
+    city_name = models.CharField(max_length=150)
+    country_name = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.hotel_name
+
+    class Meta:
+        managed = False
+        db_table = 'hotelcountry'
+
+
 @receiver(post_save, sender=Hotel)
 def new_hotel_mailing(sender, instance, created, **kwargs):
     if created:

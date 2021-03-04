@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 load_dotenv()
 
@@ -189,3 +191,10 @@ CACHES = {
 }
 
 ASGI_APPLICATION = "routing.application"
+
+sentry_sdk.init(
+    dsn=os.getenv('SENTRY_DSN'),
+    integrations=[DjangoIntegration()],
+    traces_sample_rate=1.0,
+    send_default_pii=True
+)

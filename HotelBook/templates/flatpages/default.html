@@ -2,6 +2,10 @@
 
 {% block title %}{{ flatpage.title }}{% endblock %}
 
+{% block meta %}
+    <meta name="description" content="{{ flatpage.content }}">
+{% endblock %}
+
 {% block content %}
     <main role="main" class="container">
 

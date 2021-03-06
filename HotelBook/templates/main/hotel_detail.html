@@ -4,6 +4,26 @@
     {{ hotel.title }}
 {% endblock %}
 
+{% block meta %}
+    <script type="application/ld+json">
+    {
+    "@context": "http://schema.org",
+    "@type": "Hotel",
+    "name":"{{ hotel.title }}",
+    "address":{
+        "@type":"Text",
+        "text":"{{ hotel.address }}"
+                },
+    "starRating"{
+        "@type":"Rating",
+        "ratingValue":"{% widthratio hotel.rating 2 1 %}"
+                }
+    }
+    </script>
+
+    <meta name="description" content="{{ hotel.title }} in {{ hotel.city }}. {{ hotel.stars }} stars.">
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <br>

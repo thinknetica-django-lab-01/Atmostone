@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /account/
+Disallow: /profile/
+Disallow: /admin/
+Disallow: /hotels/add/
+Disallow: /hotels/search/

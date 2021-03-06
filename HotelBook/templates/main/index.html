@@ -22,6 +22,11 @@
             <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                 Amet atque commodi consectetur consequuntur corporis delectus, deserunt dicta ducimus,
                 eveniet ipsam, iusto nam officiis possimus qui quos rem repellendus repudiandae voluptatum.</p>
+            {% if request.is_mobile %}
+                <div class="alert alert-success" role="alert">
+                    You are using mobile device
+                </div>
+            {% endif %}
         </div>
         <div class="row">
             <div class="col-6">

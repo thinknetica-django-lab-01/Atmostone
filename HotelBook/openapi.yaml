@@ -1,0 +1,253 @@
+openapi: 3.0.1
+info:
+  title: HotelBook
+  description: API specs for HotelBook
+  version: 1.0.0
+servers:
+  - url: https://127.0.0.1/v2
+  - url: http://127.0.0.1/v2
+paths:
+  /hotel:
+    post:
+      tags:
+        - hotel
+      summary: Add a new hotel
+      operationId: addHotel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Hotel'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Hotel'
+        required: true
+      responses:
+        405:
+          description: Invalid input
+          content: { }
+      security:
+        - hotelbook_auth:
+            - write:hotels
+            - read:hotels
+      x-codegen-request-body-name: body
+    get:
+      tags:
+        - hotel
+      summary: List all hotels
+      description: Returns list of hotels
+      operationId: getHotels
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Hotel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hotel'
+        400:
+          description: Invalid ID supplied
+          content: { }
+        404:
+          description: Hotel not found
+          content: { }
+      security:
+        - api_key: [ ]
+  /hotel/{HotelID}:
+    put:
+      tags:
+        - hotel
+      summary: Update an existing hotel
+      operationId: updateHotel
+      parameters:
+        - name: HotelID
+          in: path
+          description: ID of hotel
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Hotel object that needs to be changed
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Hotel'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Hotel'
+        required: true
+      responses:
+        400:
+          description: Invalid ID supplied
+          content: { }
+        404:
+          description: Hotel not found
+          content: { }
+        405:
+          description: Validation exception
+          content: { }
+      security:
+        - hotelbook_auth:
+            - write:hotels
+            - read:hotels
+      x-codegen-request-body-name: body
+    get:
+      tags:
+        - hotel
+      summary: Find hotel by ID
+      description: Returns a single hotel
+      operationId: getHotelById
+      parameters:
+        - name: HotelID
+          in: path
+          description: ID of hotel to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Hotel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hotel'
+        400:
+          description: Invalid ID supplied
+          content: { }
+        404:
+          description: Hotel not found
+          content: { }
+      security:
+        - api_key: [ ]
+    delete:
+      tags:
+        - hotel
+      summary: Deletes a hotel
+      operationId: deleteHotel
+      parameters:
+        - name: api_key
+          in: header
+          schema:
+            type: string
+        - name: HotelID
+          in: path
+          description: Hotel id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        400:
+          description: Invalid ID supplied
+          content: { }
+        404:
+          description: Hotel not found
+          content: { }
+      security:
+        - hotelbook_auth:
+            - write:hotels
+            - read:hotels
+
+components:
+  schemas:
+    Country:
+      required:
+        - title
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+      xml:
+        name: Country
+    City:
+      required:
+        - title
+        - country
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        country:
+          $ref: '#/components/schemas/Country'
+        title:
+          type: string
+      xml:
+        name: City
+    HotelFeature:
+      required:
+        - title
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+      xml:
+        name: Tag
+    Hotel:
+      required:
+        - title
+        - city
+        - address
+        - stars
+        - rating
+        - active
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        city:
+          $ref: '#/components/schemas/City'
+        title:
+          type: string
+        features:
+          type: array
+          xml:
+            name: feature
+          items:
+            $ref: '#/components/schemas/HotelFeature'
+        address:
+          type: string
+        stars:
+          type: string
+          enum:
+            - 'N'
+            - '1'
+            - '2'
+            - '3'
+            - '4'
+            - '5'
+        rating:
+          type: number
+          default: 0
+        active:
+          type: boolean
+          default: True
+      xml:
+        name: Hotel
+  securitySchemes:
+    hotelbook_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: http://127.0.0.1/oauth/dialog
+          scopes:
+            write:hotels: modify hotels
+            read:hotels: watch hotels
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header

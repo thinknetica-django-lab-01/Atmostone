@@ -1,14 +1,11 @@
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from django.core.cache import cache
 from rest_framework import viewsets
-from rest_framework import permissions
 from django.views.generic import ListView, DetailView, \
     CreateView, UpdateView, TemplateView
 
 from apps.main.models import Hotel
-
-from django.contrib.auth.models import User, Group
-from apps.main.serializers import UserSerializer, GroupSerializer
+from apps.main.serializers import HotelSerializer
 
 
 class MainpageView(TemplateView):
@@ -80,19 +77,10 @@ class HotelSearch(ListView):
         return result
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class HotelViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API Viewset for list, create, update and delete hotels
     """
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    queryset = Hotel.objects.all()
+    serializer_class = HotelSerializer
 
-
-class GroupViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
-    permission_classes = [permissions.IsAuthenticated]

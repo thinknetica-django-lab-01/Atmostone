@@ -1,9 +1,14 @@
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from django.core.cache import cache
+from rest_framework import viewsets
+from rest_framework import permissions
 from django.views.generic import ListView, DetailView, \
     CreateView, UpdateView, TemplateView
 
 from apps.main.models import Hotel
+
+from django.contrib.auth.models import User, Group
+from apps.main.serializers import UserSerializer, GroupSerializer
 
 
 class MainpageView(TemplateView):
@@ -73,3 +78,21 @@ class HotelSearch(ListView):
             result = Hotel.objects.annotate(rank=SearchRank(vector, search_query)).filter(rank__gte=0.001).order_by(
                 '-rank')
         return result
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class GroupViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+    permission_classes = [permissions.IsAuthenticated]

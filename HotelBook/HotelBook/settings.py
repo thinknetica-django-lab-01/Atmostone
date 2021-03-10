@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'channels',
     'rest_framework',
+    'django_filters',
 
     'apps.profile.apps.AccountsConfig',
     'apps.main.apps.MainConfig',
@@ -202,6 +203,7 @@ sentry_sdk.init(
 )
 
 REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
 }

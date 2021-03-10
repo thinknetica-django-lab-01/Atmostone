@@ -4,9 +4,12 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, filters
 from django.views.generic import ListView, DetailView, \
     CreateView, UpdateView, TemplateView
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 from apps.main.filters import HotelFilter, DebugResultsSetPagination
 from apps.main.models import Hotel
+from apps.main.permissions import IsOwnerOrReadOnly
 from apps.main.serializers import HotelSerializer
 
 
@@ -89,3 +92,10 @@ class HotelViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     filterset_class = HotelFilter
     ordering = ['-created_at']
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [IsAuthenticated]
+        else:
+            permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+        return [permission() for permission in permission_classes]

@@ -1,14 +1,10 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 
+from apps.main.models import Hotel
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+
+class HotelSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ['url', 'username', 'email', 'groups']
-
-
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Group
-        fields = ['url', 'name']
+        model = Hotel
+        fields = '__all__'

@@ -1,9 +1,11 @@
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from django.core.cache import cache
-from rest_framework import viewsets
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import viewsets, filters
 from django.views.generic import ListView, DetailView, \
     CreateView, UpdateView, TemplateView
 
+from apps.main.filters import HotelFilter, DebugResultsSetPagination
 from apps.main.models import Hotel
 from apps.main.serializers import HotelSerializer
 
@@ -83,4 +85,7 @@ class HotelViewSet(viewsets.ModelViewSet):
     """
     queryset = Hotel.objects.all()
     serializer_class = HotelSerializer
-
+    pagination_class = DebugResultsSetPagination
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    filterset_class = HotelFilter
+    ordering = ['-created_at']
